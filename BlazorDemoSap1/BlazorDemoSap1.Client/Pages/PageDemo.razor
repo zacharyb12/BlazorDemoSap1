@@ -1,0 +1,31 @@
+﻿@*Le paramètre @page permet de definir la route pour accéder à cette page*@
+@page "/page-demo"
+
+@* Le mode de rendu doit être précisé si in dsire une page interactive*@
+@* @rendermode InteractiveAuto *@
+
+@* Navlink permet de gerer la navigation*@
+<NavLink href="/">Home</NavLink>
+
+@*Utilisation de html simple*@
+<h3>PageDemo</h3>
+
+@* Par defaut on à acces a bootstrap*@
+<p class="w-50 text-center mx-auto my-3">Voici du texte</p>
+
+@*On à la possibilité d'appeler un composant*@
+<Counter/>
+
+@*Utilisation des directives on prefixe la directive d'un : @ *@
+@if(IsVisible)
+{
+    @*Pour le binding on prefixe le nom de la variable d'un : @ *@
+    <p>Texte : @Texte</p>
+}
+else
+{
+    <p>Aucun texte à afficher</p>
+}
+
+@*Pour les evenements on utilise l'action qui sera prefixé d'un : @ *@
+<button @onclick="ToggleVisibility" >Show Text</button>

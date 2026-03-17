@@ -1,0 +1,33 @@
+﻿@using BlazorDemoSap1.Client.Models
+
+
+<div class="card w-50 mx-auto my-3 ">
+    <h3>@product.Name</h3>
+    <p>@product.Description</p>
+    <p>@product.Price</p>
+    <p>@product.Category</p>
+    <p>@product.Id</p>
+    @if(product.Quantity <= 0)
+    {
+        <button class="btn btn-outline-warning" disabled>Details</button>
+        
+    }else
+    {   
+        <button @onclick="NavigateToDetails" class="btn btn-outline-warning">Details</button>
+    }
+</div>
+
+@code{
+    // Precise qu'une valeur sera transmise en paramètre
+    [Parameter]
+    public Product product { get; set; }
+
+    // Inject permet de geré l'injection d'elements
+    [Inject]
+    public NavigationManager _nav  {get;set;}
+
+    public void NavigateToDetails()
+    {
+        _nav.NavigateTo($"/details/{product.Id}");
+    }
+}

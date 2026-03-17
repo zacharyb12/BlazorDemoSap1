@@ -1,0 +1,20 @@
+﻿@page "/binding"
+@using BlazorDemoSap1.Client.Components
+@using BlazorDemoSap1.Client.Models
+
+<h3>Binding</h3>
+
+
+@if(products.Count() > 0)
+{
+
+    @foreach(Product p in products)
+    {
+        <ProductComponent product="p"/>
+    
+    }
+    
+}else
+{
+    <p>Aucun produit disponible . . .</p>
+}
