@@ -1,0 +1,32 @@
+﻿@using BlazorDemoSap1.Client.Models
+
+<div class="card w-50 m-auto border p-3">
+    
+    <div class="text-center">
+        <label>Title</label>
+        <br />
+        <input @bind="@NewTodo.Title"/>
+    </div>
+
+    <div class="text-center">
+        <label>Description</label>
+        <br />
+        <input @bind="@NewTodo.Description"/>
+    </div>
+
+
+    <button class="btn btn-outline-warning w-25 mx-auto my-3" @onclick="OnSubmit">Add</button>
+</div>
+
+@code {
+    public AddTodo NewTodo { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<AddTodo> Callback { get; set; }
+
+
+    public void OnSubmit()
+    {
+        Callback.InvokeAsync(NewTodo);
+    }
+}

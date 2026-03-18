@@ -1,10 +1,12 @@
 ﻿<h3>EnfantDemo</h3>
 
+@*Input : binding*@
+@*button : declencher la soumission*@
+
+
 @code {
 
-    // C'est ici qu'on definit qu'une information est reçu
-    [Parameter]
-    public string valueFromParentChild { get; set; }
+    public string input { get; set; }
 
 
     // Recuperation d'une adresse de fonction depuis le parent
@@ -14,7 +16,6 @@
     // Permet de declencher la fonction du parent
     public void SendToParent()
     {
-        SubmitFromChild.InvokeAsync("value from child");
+        SubmitFromChild.InvokeAsync(input);
     }
-
 }

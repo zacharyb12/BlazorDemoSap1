@@ -4,18 +4,17 @@
 
 <div>
     @*Ici on transmet l'information*@
-    <EnfantDemo 
-        @*Vers l'enfant on transmet une valeur*@
-        valueFromParentChild="@valueFromParentParent"
-        @*Vers le parent on transmet une adresse de fonction *@
-        SubmitFromChild="AddToList"
-        />
+    <EnfantDemo SubmitFromChild="AddToList" />
 
 </div>
 
+@foreach(string s in strings)
+{
+    
+}
+
 @code {
-    // valeur depuis le parent vers l'enfant
-    public string valueFromParentParent { get; set; }
+
 
     public List<string> strings { get; set; } = new();
 
