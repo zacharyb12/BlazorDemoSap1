@@ -1,0 +1,47 @@
+﻿@page "/formulaires"
+@using BlazorDemoSap1.Client.Models
+@rendermode InteractiveAuto
+
+<h3>Formulaires</h3>
+
+<EditForm Model="@ProductToAdd" OnValidSubmit="SubmitForm">
+
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div>
+        <label>Name</label>
+        <input @bind-value="@ProductToAdd.Name"/>
+        <ValidationMessage For="@( ()=> ProductToAdd.Name )"/>
+    </div>
+
+    <div>
+        <label>Description</label>
+        <input @bind-value="@ProductToAdd.Description"/>
+    </div>
+
+    <div>
+        <label>Price</label>
+        <input @bind-value="@ProductToAdd.Price" />
+    </div>
+
+    <button type="submit">Submit</button>
+
+</EditForm>
+
+<div>
+    <h3>@ProductAfterForm.Name</h3>
+    <p>@ProductAfterForm.Description</p>
+    <p>@ProductAfterForm.Price</p>
+</div>
+
+@code {
+    public AddProduct ProductToAdd { get; set; } = new AddProduct();
+
+    public AddProduct ProductAfterForm { get; set; } = new AddProduct();
+
+    public void SubmitForm()
+    {
+        ProductAfterForm = ProductToAdd;
+    }
+}
