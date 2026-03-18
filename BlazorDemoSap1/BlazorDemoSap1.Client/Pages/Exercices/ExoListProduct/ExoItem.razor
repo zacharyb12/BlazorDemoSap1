@@ -1,0 +1,33 @@
+﻿@using BlazorDemoSap1.Client.Models
+@* @rendermode InteractiveAuto *@
+
+@if(product == null)
+{
+    <p>Une erreur est survenue lors de la recuperation du produit </p>
+}else
+{
+    
+    <div class="card w-75 m-auto ">
+
+        <button @onclick="SetNull">x</button>
+
+        <h3>@product.Name</h3>
+        <p>@product.Description</p>
+        <p>@product.Category</p>
+        <p>@product.Price.ToString("F2")</p>
+        <p>@product.Quantity</p>
+
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public Product? product { get; set; } = null;
+
+    public void SetNull()
+    {
+        product = null;
+    }
+}

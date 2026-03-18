@@ -1,0 +1,31 @@
+﻿@*L'information @page permet definir la route associé à un Page *@
+@*Qui ne sera pas necessaire dans le cas d'un composant *@
+@*La route doit commencer par un :  / *@
+@page "/navigation"
+
+<h3>Navigation</h3>
+
+@*Navigation en html*@
+<a href="https://www.google.com">google</a>
+
+@*Navigation avec blazor*@
+@* Permet de modifier l'apparence du liens si la route correspond parfaitement*@
+<NavLink href="/" Match="NavLinkMatch.All">Home</NavLink>
+
+@* Permet de modifier l'apparence si la route contient la valeur *@
+<NavLink href="/" Match="NavLinkMatch.Prefix">Home</NavLink>
+
+@*Navigation avec le navigation manager*@
+<button @onclick="GoHome">GoHome</button>
+
+@code {
+    // Injection de dépendance pour le navigation manager
+    [Inject]
+    public NavigationManager _nav { get; set; }
+
+    // Declaration d'une methode pour naviguer vers la page d'accueil
+    public void GoHome()
+    {
+        _nav.NavigateTo("/");
+    }
+}

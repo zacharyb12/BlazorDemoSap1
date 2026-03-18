@@ -1,0 +1,42 @@
+﻿<div class="card border bg-warning m-3 w-50 ">
+
+    <div>
+
+        <h3>Enfant</h3>
+        @if(valueFromParent != null)
+        {
+            <p>Value from parent : @valueFromParent</p>
+        }else
+        {
+            <p>Value from parent : no value</p>
+        
+        }
+
+    </div>
+
+    <div>
+        <input type="text" @bind="valueToSend"/>
+        <button @onclick="SendValueToParent">Send To parent</button>
+    </div>
+
+</div>
+
+@code {
+
+    // valeur reçue du parent
+    [Parameter]
+    public string? valueFromParent { get; set; } = null;
+
+
+    // valeur transmise au parent
+    // callback qui sera déclenché depuis l'enfant
+    [Parameter]
+    public EventCallback<string> SendToParent { get; set; }
+    // variable pour recuperer la valeur de l'input
+    public string valueToSend { get; set; }
+
+    public void SendValueToParent()
+    {
+        SendToParent.InvokeAsync(valueToSend);
+    }
+}

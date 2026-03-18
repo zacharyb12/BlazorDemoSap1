@@ -1,0 +1,76 @@
+﻿@page "/component"
+
+<h3>Component et Directives</h3>
+
+<div>
+    <h2>Composant en blazor</h2>
+
+    <p>Le composant peut etre une page ou un composant qui sera appelé</p>
+    <p>Le composant peut contenir du code dans la page blazor </p>
+    <p>Le code peut etre extrait dans  " le code behind " 
+        Qui est une class c# qui aura le meme nom que le composant 
+        </p>
+
+    <p>Ex component : Component.razor</p>
+    <p>Ex code behind: Component.razor.cs</p>
+
+</div>
+
+<div>
+    <h2>@@If</h2>
+    @if(isValid)
+    {
+        <p>Ce message sera affiché si la valeur est : true</p>
+    }
+
+    @if (isValid)
+    {
+        <p>Ce message sera affiché si la valeur est : true</p>
+    }
+    else
+    {
+        <p>Ce message sera affiché si la valeur est : false</p>
+    }
+</div>
+
+<div>
+    <h2>@@foreach</h2>
+    @foreach(int i in ints)
+    {
+        <p>@i</p>
+    }
+
+</div>
+
+<div>
+    <h2>@@Switch</h2>
+    @switch(valueSwitch)
+    {
+        case"cas1":
+        <p>Valeur affiché dans le cas 1</p>
+        break;
+
+        default:
+        <p>Valeur par defaut</p>
+            break;
+    }
+
+</div>
+
+<div>
+    <h2>@@While</h2>
+@*     @while()
+    {
+        
+    } *@
+
+</div>
+
+@code {
+    public bool isValid { get; set; }
+
+    public List<int> ints { get; set; }
+
+    public string valueSwitch { get; set; }
+
+}

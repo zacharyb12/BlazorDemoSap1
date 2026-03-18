@@ -1,0 +1,75 @@
+﻿@page "/exo-list"
+
+@using BlazorDemoSap1.Client.Models
+@* @rendermode InteractiveAuto *@
+
+
+<h3>ExoList</h3>
+
+<div class="d-flex w-100">
+
+    <div class="w-50">
+        @foreach(Product p in products)
+        {
+            <div>
+                <h4>@p.Name</h4>
+                <p>@p.Price</p>
+                <p>@p.Quantity</p>
+                <button @onclick="() => SetProduct(p.Id)">Show Product</button>
+            </div>
+        }
+    </div>
+
+    @if(productToSend != null)
+    {
+        <div class="w-50">
+            <ExoItem product="productToSend"/>
+        </div>
+    }
+
+</div>
+
+@code{
+    public List<Product> products { get; set; } = new ()
+    {
+        new Product { 
+
+            Id = 1, 
+            Name = "Product 1",
+            Description= "Product1", 
+            Category = "Category 1",
+            Price = 10.99, 
+            Quantity = 1 
+        },
+        new Product { 
+
+            Id = 2, 
+            Name = "Product 2",
+            Description= "Product2", 
+            Category = "Category 2",
+            Price = 20.99, 
+            Quantity = 2 
+        },
+        new Product { 
+
+            Id = 3, 
+            Name = "Product 3",
+            Description= "Product3", 
+            Category = "Category 3",
+            Price = 30.99, 
+            Quantity = 3 
+        }
+    };
+
+    public Product? productToSend { get; set; } = null;
+
+    public void SetProduct(int id)
+    {
+        Product? productToShow = products.FirstOrDefault(p => p.Id == id);
+
+        if( productToShow != null)
+        {
+            productToSend = productToShow;
+        }
+    }
+}
