@@ -1,0 +1,20 @@
+﻿<h3>EnfantDemo</h3>
+
+@code {
+
+    // C'est ici qu'on definit qu'une information est reçu
+    [Parameter]
+    public string valueFromParentChild { get; set; }
+
+
+    // Recuperation d'une adresse de fonction depuis le parent
+    [Parameter]
+    public EventCallback<string> SubmitFromChild { get; set; }
+
+    // Permet de declencher la fonction du parent
+    public void SendToParent()
+    {
+        SubmitFromChild.InvokeAsync("value from child");
+    }
+
+}

@@ -1,0 +1,27 @@
+﻿@page "/page-demo-parent-enfant"
+
+<h3>Parent</h3>
+
+<div>
+    @*Ici on transmet l'information*@
+    <EnfantDemo 
+        @*Vers l'enfant on transmet une valeur*@
+        valueFromParentChild="@valueFromParentParent"
+        @*Vers le parent on transmet une adresse de fonction *@
+        SubmitFromChild="AddToList"
+        />
+
+</div>
+
+@code {
+    // valeur depuis le parent vers l'enfant
+    public string valueFromParentParent { get; set; }
+
+    public List<string> strings { get; set; } = new();
+
+    public void AddToList(string valueToAdd)
+    {
+        strings.Add(valueToAdd);
+    }
+
+}
