@@ -3,15 +3,20 @@
 @rendermode InteractiveAuto
 
 <h3>Formulaires</h3>
+@* Edit form donne àccès a des paramètres comme OnValidSubmit *@
+@* Model permet de savoir quel est le model pour les verification (DataAnnotation)*@
+<EditForm Model="@ProductToAdd" OnValidSubmit="SubmitForm" >
 
-<EditForm Model="@ProductToAdd" OnValidSubmit="SubmitForm">
-
+    @*Precise qu'on utilise les dataAnnotations du modele*@
     <DataAnnotationsValidator/>
+    @*Affiche les message d'erreurs en haut du formulaire*@
     <ValidationSummary/>
 
     <div>
         <label>Name</label>
+        @*@bin-value : permet de lié l'input au champ *@
         <input @bind-value="@ProductToAdd.Name"/>
+        @*Affiche un message d'erreur sur chaque champs*@
         <ValidationMessage For="@( ()=> ProductToAdd.Name )"/>
     </div>
 
@@ -25,6 +30,7 @@
         <input @bind-value="@ProductToAdd.Price" />
     </div>
 
+    @* Le type submit permet de declencher la methode associé à la balise EditForm*@
     <button type="submit">Submit</button>
 
 </EditForm>
