@@ -1,0 +1,73 @@
+﻿@page "/update-game/{id:int}"
+
+@using BlazorDemoSap1.Models
+@using BlazorDemoSap1.Repository
+
+<h3>UpdateGame</h3>
+
+<EditForm Model="@GameToUpdate" OnValidSubmit="UpdateGame">
+
+    <div >
+        <label class="form-label">Description</label>
+        <input class="form-control" @bind-value="@GameToUpdate.Description"/>
+    </div>
+
+    <div>
+        <label class="form-label">Image</label>
+        <input class="form-control" @bind-value="@GameToUpdate.ImageUrl" />
+    </div>
+
+    <div>
+        <label class="form-label">Price</label>
+        <input class="form-control" @bind-value="@GameToUpdate.Price" />
+    </div>
+
+
+    <button class="btn btn-outline-warning mx-auto" type="submit">Update</button>
+    <button class="btn btn-outline-danger mx-auto" type="button" @onclick="RemoveGame">Delete</button>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    public GameService _service { get; set; }
+
+    [Inject]
+    public NavigationManager _nav { get; set; }
+
+
+    public UpdateGame GameToUpdate { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        Game game = _service.GetById(Id);
+
+        GameToUpdate.Description = game.Description;
+        GameToUpdate.Price = game.Price;
+        GameToUpdate.ImageUrl = game.ImageUrl;
+
+    }
+
+    public void UpdateGame()
+    {
+        bool result = _service.UpdateGame(GameToUpdate,Id);
+        if(result)
+        {
+            _nav.NavigateTo("/games-list");
+        }
+    }
+
+    public void RemoveGame()
+    {
+        bool result = _service.RemoveGame(Id);
+
+        if(result)
+        {
+            _nav.NavigateTo("/games-list");
+        }
+    }
+
+}

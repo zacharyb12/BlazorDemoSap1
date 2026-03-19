@@ -1,0 +1,56 @@
+﻿@page "/games-list"
+@using BlazorDemoSap1.Models
+@using BlazorDemoSap1.Repository
+
+
+<h3>GamesList</h3>
+
+<button @onclick="NavigateToAdd">Ajouter un Jeux</button>
+
+<NavLink href="/add-game">Ajouter un Jeux</NavLink>
+
+@if(GameList.Count() == 0)
+{
+    <p>Aucun Jeux à afficher</p>
+
+}else
+{
+    @foreach(Game g in GameList)
+    {
+        <h3>@g.Name</h3>
+        <p>@g.Price</p>
+        <p>@g.Description</p>
+        <button @onclick="() => NavigateToUpdate(g.Id)">Update</button>
+
+    }
+}
+
+
+@code {
+    [Inject]
+    public GameService _service { get; set; }
+
+    public List<Game> GameList { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        GameList = _service.GetGames();
+    }
+
+
+    [Inject]
+    public NavigationManager _nav { get; set; }
+
+
+    public void NavigateToAdd()
+    {
+        _nav.NavigateTo("/add-game");
+    }
+
+    public void NavigateToUpdate(int id)
+    {
+        _nav.NavigateTo($"/update-game/{id}");
+    }
+
+
+}

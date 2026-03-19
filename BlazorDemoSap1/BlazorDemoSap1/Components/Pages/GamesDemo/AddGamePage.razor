@@ -1,0 +1,66 @@
+﻿@page "/add-game"
+@using BlazorDemoSap1.Models
+@using BlazorDemoSap1.Repository
+
+
+<EditForm Model="@NewGame" OnValidSubmit="SubmitForm" >
+
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div >
+        <label class="form-label" for="name">Name</label>
+        <br />
+        <input class="form-control" type="text" @bind-value="@NewGame.Name" />
+    </div>
+
+    <div>
+        <label class="form-label" for="description">Description</label>
+        <br />
+        <input class="form-control" type="text" @bind-value="@NewGame.Description" />
+    </div>
+
+    <div>
+        <label class="form-label" for="creator">Creator</label>
+        <br />
+        <input class="form-control" type="text" @bind-value="@NewGame.Creator" />
+    </div>
+
+    <div>
+        <label class="form-label">Price</label>
+        <br />
+        <input class="form-control" type="number" @bind-value="@NewGame.Price" />
+    </div>
+    <div>
+        <label class="form-label">Image</label>
+        <br />
+        <input class="form-control" type="text" @bind-value="@NewGame.ImageUrl" />
+    </div>
+
+    <button class="btn btn-outline-success  w-50 mx-auto" type="submit">Submit</button>
+
+</EditForm>
+
+
+@code {
+    [Inject]
+    public GameService _service { get; set; }
+
+    [Inject]
+    public NavigationManager _nav { get; set; }
+
+
+    public AddGame NewGame { get; set; } = new();
+
+    public void SubmitForm()
+    {
+        bool result = _service.AddGame(NewGame);
+
+        if(result)
+        {
+            _nav.NavigateTo("/games-list");
+        }
+            
+
+    }
+}

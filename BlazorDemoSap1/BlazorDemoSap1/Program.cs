@@ -1,5 +1,6 @@
 using BlazorDemoSap1.Client.Pages;
 using BlazorDemoSap1.Components;
+using BlazorDemoSap1.Repository;
 
 namespace BlazorDemoSap1
 {
@@ -13,6 +14,8 @@ namespace BlazorDemoSap1
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents()
                 .AddInteractiveWebAssemblyComponents();
+
+            builder.Services.AddSingleton<GameService>();
 
             var app = builder.Build();
 
