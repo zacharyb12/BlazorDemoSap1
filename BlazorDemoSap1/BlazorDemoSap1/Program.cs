@@ -15,7 +15,7 @@ namespace BlazorDemoSap1
                 .AddInteractiveServerComponents()
                 .AddInteractiveWebAssemblyComponents();
 
-            builder.Services.AddSingleton<GameService>();
+            builder.Services.AddSingleton<IGameService,GameService>();
 
             var app = builder.Build();
 

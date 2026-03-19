@@ -2,7 +2,7 @@
 
 namespace BlazorDemoSap1.Repository
 {
-    public class GameService
+    public class GameService : IGameService
     {
         public List<Game> Games { get; set; } = new()
         {
@@ -44,7 +44,7 @@ namespace BlazorDemoSap1.Repository
                         }
                     };
 
-                    public int LastId { get; set; } = 4;
+        public int LastId { get; set; } = 4;
 
         public List<Game> GetGames()
         {

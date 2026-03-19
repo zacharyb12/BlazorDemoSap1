@@ -27,30 +27,33 @@
 
 
 @code {
+    // Injection du service pour utiliser les methodes implémentées
     [Inject]
-    public GameService _service { get; set; }
+    public IGameService _service { get; set; }
 
+    // Liste pour l'affichage
     public List<Game> GameList { get; set; } = new();
 
+    // Methode executé au chargement du composant
     protected override void OnInitialized()
     {
+        // Recuperation des informations depuis le service
         GameList = _service.GetGames();
     }
 
-
+    // Permet de naviguer entre les pages
     [Inject]
     public NavigationManager _nav { get; set; }
 
-
+    // methode pour naviguer vers la page d'ajout
     public void NavigateToAdd()
     {
         _nav.NavigateTo("/add-game");
     }
 
+    // methode pour naviguer vers la page de mise à jour avec un paramètre
     public void NavigateToUpdate(int id)
     {
         _nav.NavigateTo($"/update-game/{id}");
     }
-
-
 }

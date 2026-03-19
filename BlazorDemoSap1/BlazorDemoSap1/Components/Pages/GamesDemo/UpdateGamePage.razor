@@ -1,25 +1,33 @@
-﻿@page "/update-game/{id:int}"
+﻿@*Un paramètre est défini au niveau de la route*@
+@page "/update-game/{id:int}"
 
 @using BlazorDemoSap1.Models
 @using BlazorDemoSap1.Repository
 
 <h3>UpdateGame</h3>
 
+@* Edit form demande au minimum : *@
+@* Model="@GameToUpdate" *@
+@* OnValidSubmit="UpdateGame"*@
 <EditForm Model="@GameToUpdate" OnValidSubmit="UpdateGame">
 
     <div >
+        @*Les inputs demandent au miminum *@
+        @*@bind-value="@GameToUpdate.Description" *@
+
         <label class="form-label">Description</label>
-        <input class="form-control" @bind-value="@GameToUpdate.Description"/>
+        <input type="text" class="form-control" @bind-value="@GameToUpdate.Description"/>
+
     </div>
 
     <div>
         <label class="form-label">Image</label>
-        <input class="form-control" @bind-value="@GameToUpdate.ImageUrl" />
+        <input type="text" class="form-control" @bind-value="@GameToUpdate.ImageUrl" />
     </div>
 
     <div>
         <label class="form-label">Price</label>
-        <input class="form-control" @bind-value="@GameToUpdate.Price" />
+        <input type="number" placeholder="1.0" step="0.1" @bind-value="@GameToUpdate.Price" />
     </div>
 
 
@@ -29,41 +37,51 @@
 
 @code {
 
+
+    // Paramètre qui permet de recuperer l'id de la route 
     [Parameter]
     public int Id { get; set; }
 
+    // Injection du service pour utiliser les methodes implémentées
     [Inject]
-    public GameService _service { get; set; }
+    public IGameService _service { get; set; }
 
+    // Permet de naviguer entre les pages
     [Inject]
     public NavigationManager _nav { get; set; }
 
-
+    // Modèle pour le formulaire 
     public UpdateGame GameToUpdate { get; set; } = new();
 
+    // Methode executé au chargement du composant
     protected override void OnInitialized()
     {
+        // Recuperation d'une instance 
         Game game = _service.GetById(Id);
 
+        // affectation a l'instance utilisé pour le formulaire
         GameToUpdate.Description = game.Description;
         GameToUpdate.Price = game.Price;
         GameToUpdate.ImageUrl = game.ImageUrl;
 
     }
 
+    // Methode pour la mise à jour d'un jeu
     public void UpdateGame()
     {
         bool result = _service.UpdateGame(GameToUpdate,Id);
+        // Si le resultat est positif alors on navigue vers la liste des jeux
         if(result)
         {
             _nav.NavigateTo("/games-list");
         }
     }
 
+    // Methode de suppression
     public void RemoveGame()
     {
         bool result = _service.RemoveGame(Id);
-
+        // Si le resultat est positif alors on navigue vers la liste des jeux
         if(result)
         {
             _nav.NavigateTo("/games-list");
