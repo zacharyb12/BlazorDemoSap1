@@ -1,0 +1,24 @@
+﻿@using BlazorDemoSap1.Client.Models
+
+
+<div class="card w-75 mx-auto my-3 p-3 text-center">
+    <h3>@Movie.Titre</h3>
+    <p>@Movie.Description</p>
+    <p>@Movie.AnneeDeProd</p>
+    <p>@Movie.Realisateur</p>
+    <button class="btn btn-outline-danger" @onclick="RemoveMovie">Remove</button>
+</div>
+
+@code {
+
+    [Parameter]
+    public Movie Movie  { get; set; }
+
+    [Parameter]
+    public EventCallback<int> SubmitId{ get; set; }
+
+    public void RemoveMovie()
+    {
+        SubmitId.InvokeAsync(Movie.Id);
+    }
+}

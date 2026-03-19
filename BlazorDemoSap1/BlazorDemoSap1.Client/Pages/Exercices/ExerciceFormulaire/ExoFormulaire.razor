@@ -1,4 +1,5 @@
 ﻿@page "/exo-formulaire"
+@using BlazorDemoSap1.Client.Models
 
 <h3>ExoFormulaire</h3>
 
@@ -30,6 +31,49 @@
 </ul>
 
 
+<div>
+    <h3>Liste de films</h3>
+
+    <InputMovie SubmitAction="AddMovie"/>
+
+    <div class="card shadow w-75 mx-auto my-3">
+
+    @foreach(Movie m in Movies)
+    {
+        <MovieItem Movie="m" SubmitId="RemoveMovie" />
+    }
+    </div>
+
+</div>
+
 @code {
+
+    public List<Movie> Movies { get; set; } = new List<Movie>();
+
+    public int LastId { get; set; }
+
+    public void AddMovie(AddMovie newMovie)
+    {
+        Movie movieToAdd = new()
+            {
+                Id = ++LastId,
+                Titre = newMovie.Titre,
+                Description = newMovie.Description,
+                AnneeDeProd = newMovie.AnneeDeProd,
+                Realisateur = newMovie.Realisateur
+            };
+
+        Movies.Add(movieToAdd);
+    }
+
+    public void RemoveMovie(int id)
+    {
+        int index = Movies.FindIndex(m => m.Id == id);
+
+        if(index != -1)
+        {
+            Movies.RemoveAt(index);
+        }
+    }
 
 }
