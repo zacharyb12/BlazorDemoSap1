@@ -3,35 +3,35 @@
 @using BlazorDemoSap1.Repository
 
 
-<EditForm Model="@NewGame" OnValidSubmit="SubmitForm" >
+<EditForm Model="@NewGame" OnValidSubmit="SubmitForm" class="w-75 mx-auto my-3 shadow">
 
     <DataAnnotationsValidator/>
     <ValidationSummary/>
 
-    <div >
+    <div class="w-75 mx-auto my-1">
         <label class="form-label" for="name">Name</label>
         <br />
         <input class="form-control" type="text" @bind-value="@NewGame.Name" />
     </div>
 
-    <div>
+    <div class="w-75 mx-auto my-1">
         <label class="form-label" for="description">Description</label>
         <br />
         <input class="form-control" type="text" @bind-value="@NewGame.Description" />
     </div>
 
-    <div>
+    <div class="w-75 mx-auto my-1">
         <label class="form-label" for="creator">Creator</label>
         <br />
         <input class="form-control" type="text" @bind-value="@NewGame.Creator" />
     </div>
 
-    <div>
+    <div class="w-75 mx-auto my-1">
         <label class="form-label">Price</label>
         <br />
         <input class="form-control" type="number" @bind-value="@NewGame.Price" />
     </div>
-    <div>
+    <div class="w-75 mx-auto my-1">
         <label class="form-label">Image</label>
         <br />
         <input class="form-control" type="text" @bind-value="@NewGame.ImageUrl" />
