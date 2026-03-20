@@ -1,0 +1,65 @@
+﻿@page "/update-recipe/{id:int}"
+@using BlazorDemoSap1.Models.RecipeModels
+@using BlazorDemoSap1.Repository.RecipeRepository
+
+<h3>RecipeUpdatePage</h3>
+
+
+<EditForm Model="@RecipeToUpdate" OnValidSubmit="UpdateRecipe">
+
+
+    <div>
+        <label>Description</label>
+        <input type="text" @bind-value="@RecipeToUpdate.Description" />
+    </div>
+
+    <div>
+        <label>Recipe</label>
+        <input type="text" @bind-value="@RecipeToUpdate.Recette" />
+    </div>
+
+    <div>
+        <label>Ingredients</label>
+        <input type="text" @bind-value="@RecipeToUpdate.Ingredients" />
+    </div>
+
+    <button type="submit">Update Recipe</button>
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public UpdateRecipe RecipeToUpdate { get; set; } = new();
+
+    [Inject]
+    private IRecipeService _service { get; set; }
+
+    [Inject]
+    private NavigationManager _nav { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Recipe? recipe = await _service.GetById(Id);
+
+        if(recipe == null )
+        {
+            _nav.NavigateTo("/recipes");
+        }
+
+        RecipeToUpdate.Description = recipe.Description;
+        RecipeToUpdate.Ingredients = recipe.Ingredients;
+        RecipeToUpdate.Recette = recipe.Recette;
+    }
+
+    public async Task UpdateRecipe()
+    {
+        bool result = await _service.UpdateRecipe(RecipeToUpdate,Id);
+
+        if(result)
+        {
+            _nav.NavigateTo("/recipes");
+        }
+    }
+}

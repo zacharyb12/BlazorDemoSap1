@@ -1,0 +1,62 @@
+﻿@page "/recipes"
+@using BlazorDemoSap1.Models.RecipeModels
+@using BlazorDemoSap1.Repository.RecipeRepository
+
+<h3>RecipeList</h3>
+
+<button @onclick="NavigateToAdd">Add Recipe</button>
+
+@foreach(Recipe r in recipes)
+{
+    <div>
+        <div @onclick="() => NavigateToDetails(r.Id)">
+            <h3>@r.Name</h3>
+            <p>@r.Description</p>
+        </div>
+        <button @onclick="() => NavigateToUpdate(r.Id)">Update</button>
+        <button @onclick="() => RemoveRecipe(r.Id)">Remove</button>
+    </div>
+}
+
+@code {
+
+    [Inject]
+    private IRecipeService _service { get; set; }
+
+    [Inject]
+    private NavigationManager _nav { get; set; }
+
+    private List<Recipe> recipes { get; set; } = new List<Recipe>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        recipes = await _service.GetAll();
+    }
+
+    public void NavigateToAdd()
+    {
+        _nav.NavigateTo("/add-recipe");
+    }
+
+    public void NavigateToUpdate(int id)
+    {
+        _nav.NavigateTo($"/update-recipe/{id}");
+    }
+
+    private async Task RemoveRecipe(int id)
+    {
+        bool result = await _service.DeleteRecipe(id);
+
+        if(result)
+        {
+            recipes = await _service.GetAll();
+        }
+    }
+
+    private void NavigateToDetails(int id)
+    {
+        _nav.NavigateTo($"/recipe-details/{id}");
+    }
+}
+
+

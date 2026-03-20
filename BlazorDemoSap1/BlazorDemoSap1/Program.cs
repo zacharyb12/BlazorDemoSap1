@@ -1,6 +1,9 @@
 using BlazorDemoSap1.Client.Pages;
 using BlazorDemoSap1.Components;
+using BlazorDemoSap1.Data;
 using BlazorDemoSap1.Repository;
+using BlazorDemoSap1.Repository.RecipeRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorDemoSap1
 {
@@ -10,12 +13,19 @@ namespace BlazorDemoSap1
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services.AddDbContext<DemoContext>(options =>
+            options.UseSqlServer(connectionString)
+            );
+
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents()
                 .AddInteractiveWebAssemblyComponents();
 
-            builder.Services.AddSingleton<IGameService,GameService>();
+            builder.Services.AddScoped<IGameService,GameService>();
+            builder.Services.AddScoped<IRecipeService,RecipeService>();
 
             var app = builder.Build();
 

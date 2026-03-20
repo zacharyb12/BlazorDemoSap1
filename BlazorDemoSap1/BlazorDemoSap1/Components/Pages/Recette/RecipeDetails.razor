@@ -1,0 +1,54 @@
+﻿@page "/recipe-details/{id:int}"
+@using BlazorDemoSap1.Models.RecipeModels
+@using BlazorDemoSap1.Repository.RecipeRepository
+
+<h3>RecipeDetails</h3>
+
+<div>
+    <h3>@RecipeDetailsModel.Name</h3>
+    <p>@RecipeDetailsModel.Description</p>
+    <p>@RecipeDetailsModel.Ingredients</p>
+    <p>@RecipeDetailsModel.Recette</p>
+    <p>@RecipeDetailsModel.CreatedAt.ToString("g")</p>
+    <button @onclick="RemoveRecipe">Remove</button>
+    <button @onclick="NavigateToUpdate">Update</button>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public Recipe? RecipeDetailsModel { get; set; } = new();
+
+    [Inject]
+    private IRecipeService _service { get; set; }
+
+    [Inject]
+    private NavigationManager _nav { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        RecipeDetailsModel = await _service.GetById(Id);
+
+        if(RecipeDetailsModel == null)
+        {
+            _nav.NavigateTo("/recipes");
+        }
+    }
+
+    public void NavigateToUpdate()
+    {
+        _nav.NavigateTo($"/update-recipe/{Id}");
+    }
+
+    public async Task RemoveRecipe()
+    {
+        bool result = await _service.DeleteRecipe(Id);
+
+        if(result)
+        {
+            _nav.NavigateTo("/recipes");
+        }
+    }
+
+}

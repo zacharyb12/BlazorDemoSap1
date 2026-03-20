@@ -1,0 +1,55 @@
+﻿@page "/add-recipe"
+@using BlazorDemoSap1.Models.RecipeModels
+@using BlazorDemoSap1.Repository.RecipeRepository
+
+<h3>RecipeAddPage</h3>
+
+<EditForm Model="@NewRecipe" OnValidSubmit="AddRecipe">
+
+    <div>
+        <label>Name</label>
+        <input type="text" @bind-value="@NewRecipe.Name"/>
+    </div>
+
+    <div>
+        <label>Description</label>
+        <input type="text" @bind-value="@NewRecipe.Description"/>
+    </div>
+
+    <div>
+        <label>Recipe</label>
+        <input type="text" @bind-value="@NewRecipe.Recette"/>
+    </div>
+
+    <div>
+        <label>Ingredients</label>
+        <input type="text" @bind-value="@NewRecipe.Ingredients"/>
+    </div>
+
+    <button type="submit">Add</button>
+
+</EditForm>
+
+@code {
+
+    private AddRecipe NewRecipe {get; set; } = new AddRecipe();
+
+    [Inject]
+    private IRecipeService _service { get; set; }
+
+    [Inject]
+    private NavigationManager _nav { get; set; }
+
+    public async Task AddRecipe()
+    {
+        bool result = await _service.CreateRecipe(NewRecipe);
+
+        if(result)
+        {
+            _nav.NavigateTo("/recipes");
+        }
+    }
+
+
+}
+
