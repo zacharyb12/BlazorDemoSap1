@@ -6,7 +6,7 @@ namespace BlazorDemoSap1.Client
     {
         static async Task Main(string[] args)
         {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);         
 
             await builder.Build().RunAsync();
         }

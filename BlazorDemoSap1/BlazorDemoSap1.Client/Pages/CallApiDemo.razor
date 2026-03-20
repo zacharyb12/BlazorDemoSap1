@@ -1,0 +1,36 @@
+﻿@page "/call-api-demo"
+@using BlazorDemoSap1.Client.Models
+@inject IHttpClientFactory _factory
+
+<h3>CallApiDemo</h3>
+
+@if(Movies.Count() == 0)
+{
+    <p>Aucun Film Disponible</p>
+
+}else
+{
+    @foreach(MovieApi m in Movies)
+    {
+        <div>
+            <h3>@m.Title</h3>
+            <p>@m.ImdbId</p>
+            <img src="@m.PosterUrl"/>
+        </div>
+    }
+}
+
+@code {
+
+
+    private string url = "https://api.sampleapis.com/movies/";
+
+    private List<MovieApi> Movies { get; set; } = new List<MovieApi>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient httpClient = _factory.CreateClient("api");
+        Movies = await httpClient.GetFromJsonAsync<List<MovieApi>>(url + "comedy");
+    }
+}

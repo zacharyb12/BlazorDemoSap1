@@ -19,6 +19,10 @@ namespace BlazorDemoSap1
             options.UseSqlServer(connectionString)
             );
 
+            builder.Services.AddHttpClient("api", o => {
+                o.BaseAddress = new Uri("https://api.sampleapis.com/movies/");
+            });
+
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents()
